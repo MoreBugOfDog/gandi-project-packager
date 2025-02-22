@@ -1,4 +1,4 @@
-const script = () => {
+const script = `
   const project = document.getElementById("project");
   if (!project) return; // 添加空值检查
   const projectContent = (project as HTMLIFrameElement).contentWindow?.document; // 类型断言为 iframe 元素
@@ -7,7 +7,7 @@ const script = () => {
   const TARGET_CLASS = "main-module_fullscreen-button_9f565";
 
   // 先立即尝试获取已有元素（防止按钮已存在）
-  const initialButton = document.querySelector(`.${TARGET_CLASS}`);
+  const initialButton = document.querySelector(TARGET_CLASS);
   if (initialButton) {
     bindClickListener(initialButton as HTMLElement);
   }
@@ -28,7 +28,7 @@ const script = () => {
 
         // 检查新增节点的子元素中是否存在按钮
         const targetElement = (node as HTMLElement).querySelector?.(
-          `.${TARGET_CLASS}`
+          TARGET_CLASS
         );
         if (targetElement) {
           const btn = projectContent.getElementsByClassName(
@@ -81,18 +81,18 @@ const script = () => {
       (">");
     }
   }
-};
+`;
 // 这个函数用于，将输入的url的内容爬虫下来，并生成html
 const packager = async (url: string) => {
-  let _oid = new URL(url);
-  let oid = _oid.toString().split("detail/")[1]; // 修正这里，获取正确的 oid
-  let realURL = `https://www.ccw.site/player/${oid}`;
-  let html = `
+  const _oid = new URL(url);
+  const oid = _oid.toString().split("detail/")[1]; // 修正这里，获取正确的 oid
+  const realURL = `https://www.ccw.site/player/${oid}`;
+  const html = `
     <html>
       <head>
-        <meta charSet="utf-8" />
+        <meta charSet="utf-8"></meta>
         <title>Gandi 工程</title>
-        <script>${script()}</script>
+        <script>${script}</script>
       </head>
       <body>
         <iframe

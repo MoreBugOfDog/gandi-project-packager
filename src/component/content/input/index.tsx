@@ -33,7 +33,7 @@ const InputComponent: React.FC = () => {
         type="primary"
         htmlType="submit"
         loading={loading}
-        onClick={async (e: React.MouseEvent) => {
+        onClick={async () => {
           if (inputValue.length === 0) {
             setInputStatus("error");
           }
@@ -42,7 +42,7 @@ const InputComponent: React.FC = () => {
           console.log("Packager output:", html); // 检查输出
 
           // 确保 html 是字符串
-          let htmlString = html; // 由于 packager 现在返回字符串，这里不需要再转换
+          const htmlString = html; // 由于 packager 现在返回字符串，这里不需要再转换
 
           const blob = new Blob([htmlString], { type: "text/html" });
           const url = URL.createObjectURL(blob);
