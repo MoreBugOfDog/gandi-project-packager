@@ -3,7 +3,7 @@ const script = `
   if (!project) return; // 添加空值检查
   const projectContent = (project as HTMLIFrameElement).contentWindow?.document; // 类型断言为 iframe 元素
   if (!projectContent) return; // 添加空值检查
-  // 定义目标按钮的类名（注意转义特殊字符）
+
   const TARGET_CLASS = "main-module_fullscreen-button_9f565";
 
   // 先立即尝试获取已有元素（防止按钮已存在）
@@ -12,7 +12,6 @@ const script = `
     bindClickListener(initialButton as HTMLElement);
   }
 
-  // 创建观察器监听后续动态添加
   const observer = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) {
@@ -73,10 +72,10 @@ const script = `
     element.addEventListener("click", handleButtonClick);
   }
 
-  // 点击事件处理函数（示例）
+
   function handleButtonClick(event: Event) {
-    console.log("全屏按钮被点击", event.target);
-    // 这里添加你的点击处理逻辑
+    console.log("chick full screen button", event.target);
+    
     {
       (">");
     }
