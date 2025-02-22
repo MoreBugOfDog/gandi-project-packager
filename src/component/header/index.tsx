@@ -18,16 +18,31 @@ const items1: MenuProps["items"] = [
 
 const HeaderComponent: React.FC = () => {
   return (
-    <Header style={{ display: "flex", alignItems: "center" }}>
-      <div className="demo-logo" />
-      <Menu
-        theme="dark"
-        mode="horizontal"
-        defaultSelectedKeys={["packager"]}
-        items={items1}
-        style={{ flex: 1, minWidth: 0 }}
+    <div style={{ display: "flex", alignItems: "center" }}>
+      <img
+        src="https://static.bcmcdn.com/coco/player/unstable/SkREMDP9yx.image/png?hash=Fs1wBpTGhaqMu-5EmeXcHnfH2g2B"
+        alt="logo"
+        style={{
+          position: "absolute",
+          top: "-23px",
+          left: "26px",
+          // 设置缩放
+          transform: "scale(0.3)",
+          // 贴在页面最左侧
+          transformOrigin: "left",
+          flex: 1,
+        }}
       />
-    </Header>
+      <Header style={{ display: "flex", alignItems: "center" }}>
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          defaultSelectedKeys={["packager"]}
+          items={items1}
+          style={{ flex: 2, minWidth: 0 }}
+        />
+      </Header>
+    </div>
   );
 };
 
