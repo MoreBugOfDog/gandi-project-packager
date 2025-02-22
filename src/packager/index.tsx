@@ -81,7 +81,6 @@ const script = `
     }
   }
 `;
-// 这个函数用于，将输入的url的内容爬虫下来，并生成html
 const packager = async (url: string) => {
   const _oid = new URL(url);
   const oid = _oid.toString().split("detail/")[1]; // 修正这里，获取正确的 oid

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Input, Space, Button } from "antd";
+import { Input, Space, Button, notification } from "antd";
 import packager from "../../../packager";
 const InputComponent: React.FC = () => {
   const [inputStatus, setInputStatus] = useState<undefined | "error">(
     undefined
   );
+  const [api, contextHolder] = notification.useNotification();
   const [inputValue, setInputValue] = useState(
     "https://www.ccw.site/detail/64bbb6bd81ac7071c2a54be8"
   );
