@@ -82,29 +82,46 @@ const script = `
   }
 `;
 const packager = async (url: string) => {
-  const _oid = new URL(url);
-  const oid = _oid.toString().split("detail/")[1]; // 修正这里，获取正确的 oid
-  const realURL = `https://www.ccw.site/player/${oid}`;
-  const html = `
-    <html>
-      <head>
-        <meta charSet="utf-8"></meta>
-        <title>Gandi 工程</title>
-        <script>${script}</script>
-      </head>
-      <body>
-        <iframe
-          src="${realURL}"
-          sandbox="allow-scripts allow-same-origin"
-          className="skydog-packager project"
-          id="project"
-          width="100%"
-          height="100%"
-        ></iframe>
-      </body>
-    </html>
-  `;
-  return html;
+  let oid;
+  try {
+    // 检查是否是完整URL还是只有ID
+    if (url.startsWith("http")) {
+      const _oid = new URL(url);
+      oid = _oid.toString().split("detail/")[1];
+    } else {
+      oid = url;
+    }
+
+    if (!oid) {
+      throw new Error("无效的作品ID");
+    }
+
+    const realURL = `https://www.ccw.site/player/${oid}`;
+    console.log("realURL", realURL);
+    const html = `
+      <html>
+        <head>
+          <meta charSet="utf-8"></meta>
+          <title>Gandi 工程</title>
+          <script>${script}</script>
+        </head>
+        <body>
+          <iframe
+            src="${realURL}"
+            sandbox="allow-scripts allow-same-origin"
+            className="skydog-packager project"
+            id="project"
+            width="100%"
+            height="100%"
+          ></iframe>
+        </body>
+      </html>
+    `;
+    return html;
+  } catch (error) {
+    console.error("URL解析错误:", error);
+    throw new Error("无效的URL或作品ID");
+  }
 };
 
 export default packager;

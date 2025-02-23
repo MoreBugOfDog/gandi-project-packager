@@ -12,6 +12,7 @@ const InputComponent: React.FC = () => {
   const [loading, setLoading] = useState(false);
   return (
     <>
+      {contextHolder}
       <Space direction="vertical">
         <div style={{ fontSize: "16px" }}>CCW 作品网址：</div>
         <Input
@@ -35,24 +36,39 @@ const InputComponent: React.FC = () => {
         htmlType="submit"
         loading={loading}
         onClick={async () => {
-          if (inputValue.length === 0) {
-            setInputStatus("error");
+          try {
+            if (inputValue.length === 0) {
+              setInputStatus("error");
+              api.error({
+                message: "错误",
+                description: "请输入作品ID或URL",
+              });
+              return;
+            }
+
+            setLoading(true);
+            const html = await packager(inputValue);
+
+            const blob = new Blob([html], { type: "text/html" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "index.html";
+            a.click();
+            URL.revokeObjectURL(url);
+
+            api.success({
+              message: "成功",
+              description: "打包成功！",
+            });
+          } catch (error) {
+            api.error({
+              message: "错误",
+              description: error instanceof Error ? error.message : "打包失败",
+            });
+          } finally {
+            setLoading(false);
           }
-          setLoading(true);
-          const html = await packager(inputValue);
-          console.log("Packager output:", html); // 检查输出
-
-          // 确保 html 是字符串
-          const htmlString = html; // 由于 packager 现在返回字符串，这里不需要再转换
-
-          const blob = new Blob([htmlString], { type: "text/html" });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = "index.html";
-          a.click();
-          URL.revokeObjectURL(url);
-          setLoading(false);
         }}
       >
         打包
